@@ -6,11 +6,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 public class Test {
-    
 
 @RequestMapping("/test")
 public ModelAndView testMsg(){
-
 
 ModelAndView modelAndView = new ModelAndView();
     modelAndView.setViewName("index.html");

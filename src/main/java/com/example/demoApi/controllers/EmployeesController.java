@@ -1,66 +1,53 @@
 package com.example.demoApi.controllers;
 
-import org.springframework.stereotype.Controller;
+import com.example.demoApi.dto.Employeedto;
+import com.example.demoApi.services.EmployeeService;
+import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
+import java.util.List;
+import java.util.Map;
 
-@Controller
+@RestController
+@RequestMapping(path = "/employees")
 public class EmployeesController {
-    
-//Controller
-// GET
-// POST
-// DELETE
 
-private String name;
+    private final EmployeeService employeeService;
+    public EmployeesController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
+    }
 
-private Long id;
+    @GetMapping
+    public List<Employeedto> getAllEmployees(){
+        return employeeService.getAllEmployees();
+    }
 
-private  LocalDate joiningDate;
+    @GetMapping ("/{id}")
+    public Employeedto getEmployeeById(@PathVariable("id") Long id){
 
-private boolean isActive;
+        return employeeService.getEmployeeByID(id);
+        //return  new Employeedto(id,"Shadman", LocalDate.of(2024, 01, 16),true);
 
-public EmployeesController(String name, Long id, LocalDate joiningDate, boolean isActive) {
-    this.name = name;
-    this.id = id;
-    this.joiningDate = joiningDate;
-    this.isActive = isActive;
-}
+    }
+    @DeleteMapping(path = "/{id}")
+    public boolean deleteEmployessById(@PathVariable Long id){
 
-public void setName(String name) {
-    this.name = name;
-}
+       return  employeeService.deleteEmployeeById(id);
 
-public void setId(Long id) {
-    this.id = id;
-}
+    }
+    @PostMapping
+    public Employeedto createNewEmployee(@RequestBody Employeedto employeedto){
 
-public void setJoiningDate(LocalDate joiningDate) {
-    this.joiningDate = joiningDate;
-}
+        return employeeService.createNewEmployee(employeedto);
+        //return  new Employeedto(id,"Shadman", LocalDate.of(2024, 01, 16),true);
 
-public void setActive(boolean isActive) {
-    this.isActive = isActive;
-}
-
-public String getName() {
-    return name;
-}
-
-public Long getId() {
-    return id;
-}
-
-public LocalDate getJoiningDate() {
-    return joiningDate;
-}
-
-public boolean isActive() {
-    return isActive;
-}
+    }
 
 
 
-
-
+//    @GetMapping ("/employees")
+//    public String getEmployeedata(@PathParam("sortBy")String sortBy, @PathParam("limit")Integer limit){
+//
+//        return  "Hello "+sortBy+" "+limit;
+//
+//    }
 }
